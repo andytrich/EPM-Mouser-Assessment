@@ -2,6 +2,7 @@ using System.Text.Json.Serialization;
 using EPM.Mouser.Interview.Data;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddScoped<IWarehouseRepository, WarehouseRepository>();
 
 // Add services to the container.
 builder.Services.AddRazorPages();
