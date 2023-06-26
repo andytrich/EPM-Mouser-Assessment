@@ -1,18 +1,37 @@
-﻿@{
+﻿@using EPM.Mouser.Interview.Models;
+@model List<Product>
+
+@{
     ViewData["Title"] = "Test Page";
 }
 
 
 <h1>In Stock items</h1>
 
-@*
-    Display a table here which shows the products with any Available stock
-    - use the bootstrap table styling
-    - Available stock = Total Stock - Reserved Stock
-    - Columns shown:
-        - action => with a link to a placeholder product detail page. 
-        - Name
-        - Total Amount in stock
-        - Available stock (this should be orange if < 10 and red < zero)
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>Action</th>
+            <th>Name</th>
+            <th>Total Amount in Stock</th>
+            <th>Available Stock</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in Model)
+        {
+            var availableStock = product.InStockQuantity - product.ReservedQuantity;
+            var stockColor = availableStock < 0 ? "red" : availableStock < 10 ? "orange" : "";
 
-*@
+            <tr>
+                <td>
+                    <a href="/products/@product.Id">View Details</a>
+                </td>
+                <td>@product.Name</td>
+                <td>@product.InStockQuantity</td>
+                <td style="color: @stockColor">@availableStock</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
